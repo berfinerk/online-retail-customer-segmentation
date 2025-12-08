@@ -44,3 +44,37 @@ df["TotalPrice"] = df["Quantity"] * df["Price"]
 #rfm de monetary (m) = bir müşterinin yaptığı tüm totalprileın toplamı
 #kontrol
 # print(df.shape)
+
+#temel istatistikler
+# print("\ntoplam işlem sayısı:", len(df))
+# print("toplam müşteri sayısı:", df["Customer ID"].nunique())
+# print("toplam fatura sayısı:", df["Invoice"].nunique())
+# print("toplam ciro:", df["TotalPrice"].sum())
+# print("\nmüşteri başına ortalama harcama:",
+#       df.groupby("Customer ID")["TotalPrice"].sum().mean())
+# print("\nEn çok harcayan ilk 10 müşteri:")
+# print(df.groupby("Customer ID")["TotalPrice"].sum()
+#       .sort_values(ascending=False)
+#       .head(10))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
