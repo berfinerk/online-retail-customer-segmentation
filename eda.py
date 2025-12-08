@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 file_path = "data/online_retail_II.xlsx"
 
@@ -57,14 +58,31 @@ df["TotalPrice"] = df["Quantity"] * df["Price"]
 #       .sort_values(ascending=False)
 #       .head(10))
 
+#ZAMAN ANALİZİ
+#satış verilerini yıl ve aya göre gruplandırarak aylık toplam satışları hesaplandı.
+df["Year"] = df["InvoiceDate"].dt.year
+df["Month"] = df["InvoiceDate"].dt.month
+monthly_sales = df.groupby(["Year", "Month"])["TotalPrice"].sum().reset_index()
+# print(monthly_sales.head())
+#tabloyu kronolojik sıraya sokalım
+monthly_sales = monthly_sales.sort_values(["Year","Month"])
+# print(monthly_sales.head())
+# print(df["Year"].unique())
 
+#satışların zaman içindeki değişimi(ay bazında) göstermektedir.
+#zaman etiketi(örn: 2010-1) tek bir string etiketine dönüştürdük
+monthly_sales["YearMonth"] = monthly_sales["Year"].astype(str) + "-" + monthly_sales["Month"].astype(str)
 
+plt.figure(figsize=(14,6))
+plt.plot(monthly_sales["YearMonth"], monthly_sales["TotalPrice"],marker='o')
 
+plt.xticks(rotation=90)
+plt.title("Aylık Toplam Satış Trendleri")
+plt.xlabel("Ay")
+plt.ylabel("Toplam Satış (£)")
+plt.tight_layout()
 
-
-
-
-
+plt.show()
 
 
 
