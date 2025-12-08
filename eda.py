@@ -96,10 +96,46 @@ plt.ylabel("Toplam Satış (£)")
 plt.xticks(rotation=45)
 plt.tight_layout()
 
+# plt.show()
+
+#ürün analizi
+#1. En çok satılan ürünler(quantity)
+#ürün açıklamalarına göre grupluyor
+#her ürünün toplam kaç adet satıldığını hesaplıyor
+#en çok satan 10 ürünü listeliyor
+#bu, miktar olarak en popüler ürün hangisi? sorusunu cevaplar
+top_products_qty = df.groupby("Description")["Quantity"].sum().sort_values(ascending=False)
+# print(top_products_qty.head(10))
+
+#top10 quantity ( en çok satılan ilk 10 ürün)
+top10_qty = top_products_qty.head(10)
+
+plt.figure(figsize=(12,6))
+plt.barh(top10_qty.index,top10_qty.values)
+plt.title("En Çok Satılan İlk 10 Ürün (Quantity)")
+plt.xlabel("Satılan Adet")
+plt.ylabel("Ürün")
+plt.tight_layout()
 plt.show()
 
 
+#2.En çok gelir getiren ürünler(TotalPrice)
+#hangi ürünün şirkete en çok para kazandırdığını gösterir.
+#bazı ürünler çok satılır ama ucuz olduğu için ciro getirmez.
+#bazı ürünler az satar ama pahalıdır, çok ciro getirir.
+top_products_revenue = df.groupby("Description")["TotalPrice"].sum().sort_values(ascending=False)
+# print(top_products_revenue.head(10))
 
+#top 10 revenue ( en çok gelir getiren ilk 10 ürün)
+top10_rev = top_products_revenue.head(10)
+
+plt.figure(figsize=(12,6))
+plt.barh(top10_rev.index, top10_rev.values)
+plt.title("En Çok Gelir Getiren İlk 10 Ürün (Revenue)")
+plt.xlabel("Toplam Gelir (£)")
+plt.ylabel("Ürün")
+plt.tight_layout()
+plt.show()
 
 
 
