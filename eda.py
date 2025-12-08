@@ -81,10 +81,22 @@ plt.title("Aylık Toplam Satış Trendleri")
 plt.xlabel("Ay")
 plt.ylabel("Toplam Satış (£)")
 plt.tight_layout()
+# plt.show()
+
+#ülke bazında satışların hesaplanması
+country_sales = df.groupby("Country")["TotalPrice"].sum().sort_values(ascending=False)
+# print(country_sales.head(10))
+#ülke grafiği
+top_countries = country_sales.head(10)
+plt.figure(figsize=(10,6))
+plt.bar(top_countries.index, top_countries.values)
+plt.title("En Çok Satış Yapılan İlk 10 Ülke")
+plt.xlabel("Ülke")
+plt.ylabel("Toplam Satış (£)")
+plt.xticks(rotation=45)
+plt.tight_layout()
 
 plt.show()
-
-
 
 
 
