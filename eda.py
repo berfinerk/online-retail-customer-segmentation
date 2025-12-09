@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 file_path = "data/online_retail_II.xlsx"
 
@@ -116,7 +117,7 @@ plt.title("En Çok Satılan İlk 10 Ürün (Quantity)")
 plt.xlabel("Satılan Adet")
 plt.ylabel("Ürün")
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 
 #2.En çok gelir getiren ürünler(TotalPrice)
@@ -135,12 +136,73 @@ plt.title("En Çok Gelir Getiren İlk 10 Ürün (Revenue)")
 plt.xlabel("Toplam Gelir (£)")
 plt.ylabel("Ürün")
 plt.tight_layout()
+# plt.show()
+
+#Sayısal dağılım analizi
+plt.figure(figsize=(14,4))
+
+plt.subplot(1,3,1)
+plt.hist(df["Quantity"], bins=40, color="skyblue", log=True)
+plt.title("Quantity(Miktar) Dağılımı")
+
+plt.subplot(1,3,2)
+plt.hist(df["Price"], bins=40, color="lightgreen", log=True)
+plt.title("Price(Fiyat) Dağılımı")
+
+plt.subplot(1,3,3)
+plt.hist(df["TotalPrice"], bins=40, color="salmon", log=True)
+plt.title("TotalPrice(ToplamFiyat Dağılımı")
+
+plt.tight_layout()
+# plt.show()
+
+#boxplot aykırı değer analizi
+plt.figure(figsize=(12,4))
+
+plt.subplot(1,3,1)
+plt.boxplot(df["Quantity"], vert=True)
+plt.title("Quantity(Miktar) Boxplot")
+
+plt.subplot(1,3,2)
+plt.boxplot(df["Price"], vert=True)
+plt.title("Price(Fiyat) Boxplot")
+
+plt.subplot(1,3,3)
+plt.boxplot(df["TotalPrice"], vert=True)
+plt.title("TotalPrice(ToplamFiyat Boxplot")
+plt.tight_layout()
 plt.show()
 
+#kolerasyon Matrisi(Heamap)
+numeric_cols = ["Quantity", "Price", "TotalPrice"]
+corr = df[numeric_cols].corr()
 
+plt.figure(figsize=(6,4))
+sns.heatmap(corr, annot=True, cmap="Blues", fmt=".2f")
+plt.title("Quantity - Price - TotalPrice Korelasyon Matrisi")
+plt.tight_layout()
+plt.show()
 
+#ürün bazlı çok değişkenli analiz(bubble chart)
+product_stats = df.groupby("Description").agg({
+    "Quantity": "sum",
+    "TotalPrice": "sum",
+    "Price": "sum",
+}).reset_index()
 
+plt.figure(figsize=(10,6))
 
-
-
-
+plt.scatter(
+    product_stats["Quantity"],
+    product_stats["TotalPrice"],
+    s=product_stats["Price"] / 2,
+    alpha=0.6,
+    c=product_stats["Price"],
+    cmap ="viridis"
+)
+plt.xlabel("Toplam Satış Adedi (Quantity)")
+plt.ylabel("Toplam Ciro (TotalPrice)")
+plt.title("Ürünlerde Quantity - Revenue - Price İlişkisi (Bubble Chart)")
+plt.colorbar(label="Ortalama Fiyat")
+plt.tight_layout()
+plt.show()
