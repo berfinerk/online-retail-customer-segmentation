@@ -171,7 +171,7 @@ plt.subplot(1,3,3)
 plt.boxplot(df["TotalPrice"], vert=True)
 plt.title("TotalPrice(ToplamFiyat Boxplot")
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 #kolerasyon Matrisi(Heamap)
 numeric_cols = ["Quantity", "Price", "TotalPrice"]
@@ -181,7 +181,7 @@ plt.figure(figsize=(6,4))
 sns.heatmap(corr, annot=True, cmap="Blues", fmt=".2f")
 plt.title("Quantity - Price - TotalPrice Korelasyon Matrisi")
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 #ürün bazlı çok değişkenli analiz(bubble chart)
 product_stats = df.groupby("Description").agg({
@@ -205,4 +205,39 @@ plt.ylabel("Toplam Ciro (TotalPrice)")
 plt.title("Ürünlerde Quantity - Revenue - Price İlişkisi (Bubble Chart)")
 plt.colorbar(label="Ortalama Fiyat")
 plt.tight_layout()
-plt.show()
+# plt.show()
+
+#RFM anallizi: Recency(YAKINLIK),Frequency(SIKLIK), Monetary(Para)
+#Recency(R):Müşteri ne kadar süredir alışveriş yapamamış.
+#InvoiceDate tarih tipinde mi emin olalım
+df["InvoiceDate"] = pd.to_datetime(df["InvoiceDate"])
+#InvoiceDate sütunuu tarih/zaman tipine çevir
+
+#RFM referans tarih: Genelde veri setindeki en son tarih +1 gün alınır.
+snapshot_date = df["InvoiceDate"].max() + pd.Timedelta(days=1)
+# print("Snapshot Date:", snapshot_date)
+
+#her müşteri en son ne zaman alışveriş yapmış
+#her müşteri için son alışveriş tarihini bulmak: Bu tarihten spanpshot_date i çıkarmak, aradaki gün farkını hesaplamak
+
+#her müşteri için Recency hesaplama
+recency_df = df.groupby("Customer ID").agg({
+    "InvoiceDate": lambda x: (snapshot_date -x.max()).days
+}).reset_index()
+recency_df.rename(columns={"InvoiceDate": "Recency"}, inplace=True)
+print(recency_df.head())
+print(recency_df.describe())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
