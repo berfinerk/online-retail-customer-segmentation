@@ -233,11 +233,19 @@ recency_df.rename(columns={"InvoiceDate": "Recency"}, inplace=True)
 #frequency müşteri sadakati hakkında bilgi verir.
 frequency_df = df.groupby("Customer ID")["Invoice"].nunique().reset_index()
 frequency_df.rename(columns={"Invoice": "Frequency"}, inplace=True)
-print(frequency_df.head())
-print(frequency_df.describe())
+# print(frequency_df.head())
+# print(frequency_df.describe())
 
+#Monetary hesaplama mantığı
+#her müşteri toplam ne kadar harcamış? Yani bu müşteri toplam kaç € harcamış.Bu metrik daha sonra en değerli müşterileri belirlemekte çok önemli
+#monetary = toplam totalprice yani quantity * price ın toplamı zaten totalprice kolonu var.Şimdi bunu müşteri bazında özetleyeceğiz.
+# TotalPrice = Quantity * Price olduğu için,bir müşterinin toplam harcamasını bulmak için sum() kullanıyoruz.
+monetary_df = df.groupby("Customer ID")["TotalPrice"].sum().reset_index()
+#kolon adını monetary yapıcaz
+monetary_df.rename(columns={"TotalPrice": "Monetary"}, inplace=True)
 
-
+print(monetary_df.head())
+print(monetary_df.describe())
 
 
 
