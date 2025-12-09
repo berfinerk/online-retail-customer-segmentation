@@ -225,9 +225,16 @@ recency_df = df.groupby("Customer ID").agg({
     "InvoiceDate": lambda x: (snapshot_date -x.max()).days
 }).reset_index()
 recency_df.rename(columns={"InvoiceDate": "Recency"}, inplace=True)
-print(recency_df.head())
-print(recency_df.describe())
+# print(recency_df.head())
+# print(recency_df.describe())
 
+#frequrncy hesaplama
+#müşteri kaç kez alışveriş yaptı? Yani kaç farklı fatura kesmiş? bu yüzden ınvoice kolonu kullanıyoruz.
+#frequency müşteri sadakati hakkında bilgi verir.
+frequency_df = df.groupby("Customer ID")["Invoice"].nunique().reset_index()
+frequency_df.rename(columns={"Invoice": "Frequency"}, inplace=True)
+print(frequency_df.head())
+print(frequency_df.describe())
 
 
 
