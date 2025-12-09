@@ -244,10 +244,18 @@ monetary_df = df.groupby("Customer ID")["TotalPrice"].sum().reset_index()
 #kolon adını monetary yapıcaz
 monetary_df.rename(columns={"TotalPrice": "Monetary"}, inplace=True)
 
-print(monetary_df.head())
-print(monetary_df.describe())
+# print(monetary_df.head())
+# print(monetary_df.describe())
 
+#RFM tablosunun oluşturulması
+#recency ve frequency tablolarını customer ıd üzerinden birleştirmek
+rfm = recency_df.merge(frequency_df, on="Customer ID")
+#monetary tablosunu da ekle
+rfm = rfm.merge(monetary_df, on="Customer ID")
 
+print(rfm.head())
+print(rfm.describe())
+print(rfm.shape)
 
 
 
