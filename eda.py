@@ -253,9 +253,46 @@ rfm = recency_df.merge(frequency_df, on="Customer ID")
 #monetary tablosunu da ekle
 rfm = rfm.merge(monetary_df, on="Customer ID")
 
-print(rfm.head())
-print(rfm.describe())
-print(rfm.shape)
+# print(rfm.head())
+# print(rfm.describe())
+# print(rfm.shape)
+
+#RFM SCORING (PUALAMA)
+
+#recency skoru (küçük değer = yüksek puan)
+rfm['R_Score'] = pd.qcut(rfm["Recency"], 5, labels=[5,4,3,2,1]).astype(int)
+
+#frequency skoru(büyük değer=yüksek puan)
+rfm['F_Score'] = pd.qcut(rfm["Frequency"].rank(method="first"), 5, labels=[1,2,3,4,5]).astype(int)
+
+#momentary skoru ( büyük değer = yüksek puan)
+rfm['M_Score'] = pd.qcut(rfm['Monetary'], 5, labels=[1,2,3,4,5]).astype(int)
+
+#rfm toplam skoru
+rfm['RFM_Score'] = ( rfm['R_Score'].astype(str) + rfm['F_Score'].astype(str) + rfm['M_Score'].astype(str) )
+
+print("\nRFM skorlaması tamamlandı. İlk 5 müşteri:")
+print(rfm[['Customer ID', 'Recency', 'Frequency', 'Monetary', 'R_Score', 'F_Score', 'M_Score', 'RFM_Score']].head())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
