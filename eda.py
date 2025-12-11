@@ -287,7 +287,7 @@ def segment_et(row):
 
     #2) sadık müşteriler
     elif(r >= 3) and (f >=3):
-        return " Loyal Champions"
+        return "Loyal Champions"
 
     #3) potansiyel sadıklar (yeni ama iyi sinyal veriyor)
     elif(r >= 4) and (f <= 2):
@@ -307,10 +307,16 @@ def segment_et(row):
 
 #fonksiyonu tüm satırlara uygulayıp segment sütununu oluşturalım
 rfm['Segment'] = rfm.apply(segment_et, axis=1)
-print("\nSegment sütunu eklendi. İlk 10 müşteri:")
-print(rfm[['Customer ID', 'R_Score', 'F_Score', 'M_Score', 'RFM_Score', 'Segment']].head(10))
+# print("\nSegment sütunu eklendi. İlk 10 müşteri:")
+# print(rfm[['Customer ID', 'R_Score', 'F_Score', 'M_Score', 'RFM_Score', 'Segment']].head(10))
 
+#segment sayıları analizi
+#segmentlere göre müşteri sayısını bulalım
+print("\nSegmentlere göre müşteri sayıları:")
+print(rfm['Segment'].value_counts())
 
+print("\nSegment Oranları (%):")
+print((rfm["Segment"].value_counts(normalize=True) * 100).round(2))
 
 
 
