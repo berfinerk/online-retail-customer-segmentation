@@ -271,14 +271,44 @@ rfm['M_Score'] = pd.qcut(rfm['Monetary'], 5, labels=[1,2,3,4,5]).astype(int)
 #rfm toplam skoru
 rfm['RFM_Score'] = ( rfm['R_Score'].astype(str) + rfm['F_Score'].astype(str) + rfm['M_Score'].astype(str) )
 
-print("\nRFM skorlaması tamamlandı. İlk 5 müşteri:")
-print(rfm[['Customer ID', 'Recency', 'Frequency', 'Monetary', 'R_Score', 'F_Score', 'M_Score', 'RFM_Score']].head())
+# print("\nRFM skorlaması tamamlandı. İlk 5 müşteri:")
+# print(rfm[['Customer ID', 'Recency', 'Frequency', 'Monetary', 'R_Score', 'F_Score', 'M_Score', 'RFM_Score']].head())
 
+#segment fonksiyonu
+#rfm segment oluşturma
+def segment_et(row):
+    r =row['R_Score']
+    f =row['F_Score']
+    m = row['Monetary']
 
+    #1)en değerli grup: champions
+    if(r >= 4) and (f >= 4) and (m >= 4):
+        return "Champions"
 
+    #2) sadık müşteriler
+    elif(r >= 3) and (f >=3):
+        return " Loyal Champions"
 
+    #3) potansiyel sadıklar (yeni ama iyi sinyal veriyor)
+    elif(r >= 4) and (f <= 2):
+        return "Potential Loyalist"
 
+    #4) eskiden çok aktifmiş ama artık gelmiyor -> riskli
+    elif(r <=2) and (f >= 4):
+        return "At Risk"
 
+    #5) hem az gelmiş, hem az kalmış, hem az harcamış -> kayıp / düşük değerli
+    elif (r <=2) and (f<= 2) and (m <= 2):
+        return "Lost"
+
+    #6) diğer arada kalanlar
+    else:
+        return "Others"
+
+#fonksiyonu tüm satırlara uygulayıp segment sütununu oluşturalım
+rfm['Segment'] = rfm.apply(segment_et, axis=1)
+print("\nSegment sütunu eklendi. İlk 10 müşteri:")
+print(rfm[['Customer ID', 'R_Score', 'F_Score', 'M_Score', 'RFM_Score', 'Segment']].head(10))
 
 
 
