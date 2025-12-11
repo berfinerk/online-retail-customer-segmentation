@@ -312,14 +312,19 @@ rfm['Segment'] = rfm.apply(segment_et, axis=1)
 
 #segment sayıları analizi
 #segmentlere göre müşteri sayısını bulalım
-print("\nSegmentlere göre müşteri sayıları:")
-print(rfm['Segment'].value_counts())
+# print("\nSegmentlere göre müşteri sayıları:")
+# print(rfm['Segment'].value_counts())
+#
+# print("\nSegment Oranları (%):")
+# print((rfm["Segment"].value_counts(normalize=True) * 100).round(2))
 
-print("\nSegment Oranları (%):")
-print((rfm["Segment"].value_counts(normalize=True) * 100).round(2))
+#segment bazlı harcama analizi
+#segmentlere göre toplam harcamayı hesaplayalım
+segment_monetary = rfm.groupby('Segment')['Monetary'].agg(['sum', 'mean', 'count']).reset_index()
+segment_monetary = segment_monetary.sort_values(by='sum', ascending=False)
 
-
-
+print("\nSegmentlere göre toplam ve ortalama harcama:")
+print(segment_monetary)
 
 
 
