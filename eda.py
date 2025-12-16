@@ -359,7 +359,7 @@ plt.xlabel("Segment")
 plt.ylabel("Toplam Harcama")
 plt.xticks(rotation=30)
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 #segmentlere göre ortalama harcama(customer value)
 plt.figure(figsize=(8,5))
@@ -373,9 +373,20 @@ plt.xlabel("Segment")
 plt.ylabel("Ortalama Harcama")
 plt.xticks(rotation=30)
 plt.tight_layout()
+# plt.show()
+
+#segmentlere göre ortalama frequency (alışveriş sıklığı)
+plt.figure(figsize=(8,5))
+sns.barplot(
+    data=rfm,
+    x="Segment",
+    y="Frequency"
+)
+plt.title("Segmentlere Göre Ortalama Alışveriş Sıklığı (Frequency)")
+plt.xlabel("Segment")
+plt.ylabel("Ortalama Frequency")
+plt.xticks(rotation=30)
+plt.tight_layout()
 plt.show()
-
-
-
 
 
