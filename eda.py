@@ -387,6 +387,18 @@ plt.xlabel("Segment")
 plt.ylabel("Ortalama Frequency")
 plt.xticks(rotation=30)
 plt.tight_layout()
+# plt.show()
+
+#segmentlere göre ortalama recency(son alışverişten geçen gün)
+plt.figure(figsize=(8,5))
+sns.barplot(
+    data=rfm,
+    x="Segment",
+    y="Recency"
+)
+plt.title("Segmentlere Göre Ortalama Recency")
+plt.xlabel("Segment")
+plt.ylabel("Gün (Son alışverişten itibaren)")
+plt.xticks(rotation=30)
+plt.tight_layout()
 plt.show()
-
-
