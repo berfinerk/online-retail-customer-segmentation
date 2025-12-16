@@ -361,7 +361,19 @@ plt.xticks(rotation=30)
 plt.tight_layout()
 plt.show()
 
-
+#segmentlere göre ortalama harcama(customer value)
+plt.figure(figsize=(8,5))
+sns.barplot(
+    data=segment_monetary,
+    x="Segment",
+    y="mean"
+)
+plt.title("Segmentlere Göre Ortalama Harcama (Müşteri Başına)")
+plt.xlabel("Segment")
+plt.ylabel("Ortalama Harcama")
+plt.xticks(rotation=30)
+plt.tight_layout()
+plt.show()
 
 
 
