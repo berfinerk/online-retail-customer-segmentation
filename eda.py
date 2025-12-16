@@ -330,12 +330,22 @@ segment_monetary = segment_monetary.sort_values(by='sum', ascending=False)
 segment_counts = rfm["Segment"].value_counts()
 segment_rates = (rfm["Segment"].value_counts(normalize=True) * 100).round(2)
 
-print("Segmentlere göre müşteri sayısı:\n", segment_counts)
-print("\nSegment oranları (%):\n", segment_rates)
+# print("Segmentlere göre müşteri sayısı:\n", segment_counts)
+# print("\nSegment oranları (%):\n", segment_rates)
 
-
-
-
+#segmentlere göre müşteri sayısı
+plt.figure(figsize=(8,5))
+sns.countplot(
+    data=rfm,
+    x="Segment",
+    order=rfm["Segment"].value_counts().index
+)
+plt.title("Segmentlere Göre Müşteri Sayısı")
+plt.xlabel("Segment")
+plt.ylabel("Müşteri Sayısı")
+plt.xticks(rotation=30)
+plt.tight_layout()
+# plt.show()
 
 
 
