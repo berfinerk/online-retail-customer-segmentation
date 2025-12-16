@@ -95,11 +95,38 @@ rfm["Cluster"] = kmeans.fit_predict(X_scaled)
 # print(rfm["Cluster"].value_counts().sort_index())
 # print(rfm.head())
 
+#cluster profillerini çıkar(ortalamalar)
+#cluster profillerini çıkarma(ortalama RFM değerleri)
 
+cluster_summary = (
+    rfm.groupby("Cluster")[["Recency", "Frequency", "Monetary"]]
+    .mean()
+    .round(2)
+)
 
+cluster_counts = rfm["Cluster"].value_counts().sort_index()
 
+# print("Cluster ortalamaları:\n", cluster_summary)
+# print("\nCluster müşteri sayıları:\n", cluster_counts)
 
+#cluster'lara isim veriyoruz
+#bu segmentasyonun tamamlandığı an
+# K-Means cluster profilleri:
+# Cluster 2 → Champions (çok yakın zamanda, çok sık alışveriş yapan ve yüksek harcama yapan müşteriler)
+# Cluster 3 → Loyal Customers (yakın zamanda alışveriş yapan, sık ve yüksek harcama yapan sadık müşteriler)
+# Cluster 0 → Regular Customers (orta seviyede alışveriş yapan, ana müşteri kitlesi)
+# Cluster 1 → At Risk Customers (uzun süredir alışveriş yapmayan, kaybedilme riski taşıyan müşteriler)
 
+#cluster'lara anlamlı segment isimleri verme
+segment_map = {
+    0: "Regular Customers", #orta seviye, ana kitle
+    1: "At Risk Customers", #uzun süredir gelmeyen
+    2: "Champions",         #Çok yakın, çok sık, çok harcayan
+    3:"Loyal Customers",    #yakın, sık, yüksek harcayan
+}
+rfm["Segmen_KMeans"] = rfm["Cluster"].map(segment_map)
+#kontrol
+print(rfm[["Customer ID", "Cluster", "Segmen_KMeans"]].head())
 
 
 
