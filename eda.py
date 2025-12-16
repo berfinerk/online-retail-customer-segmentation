@@ -347,8 +347,19 @@ plt.xticks(rotation=30)
 plt.tight_layout()
 # plt.show()
 
-
-
+#segmentlere göre toplam harcama(monetary)
+plt.figure(figsize=(8,5))
+sns.barplot(
+    data=segment_monetary,
+    x="Segment",
+    y="sum"
+)
+plt.title("Segmentlere Göre Toplam Harcama")
+plt.xlabel("Segment")
+plt.ylabel("Toplam Harcama")
+plt.xticks(rotation=30)
+plt.tight_layout()
+plt.show()
 
 
 
