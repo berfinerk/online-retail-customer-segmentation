@@ -323,11 +323,15 @@ rfm['Segment'] = rfm.apply(segment_et, axis=1)
 segment_monetary = rfm.groupby('Segment')['Monetary'].agg(['sum', 'mean', 'count']).reset_index()
 segment_monetary = segment_monetary.sort_values(by='sum', ascending=False)
 
-print("\nSegmentlere göre toplam ve ortalama harcama:")
-print(segment_monetary)
+# print("\nSegmentlere göre toplam ve ortalama harcama:")
+# print(segment_monetary)
 
+#segmentlere göre müşteri sayısı ve oran
+segment_counts = rfm["Segment"].value_counts()
+segment_rates = (rfm["Segment"].value_counts(normalize=True) * 100).round(2)
 
-
+print("Segmentlere göre müşteri sayısı:\n", segment_counts)
+print("\nSegment oranları (%):\n", segment_rates)
 
 
 
