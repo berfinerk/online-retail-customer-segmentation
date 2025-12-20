@@ -75,7 +75,7 @@ plt.xlabel("K (Küme Sayısı)")
 plt.ylabel("WCSS")
 plt.title("Elbow Method")
 plt.tight_layout()
-# plt.show()
+plt.show()
 
 #silhouette skorlarını hesapla(kararın doğru olup olamdığına bakıyoruz)
 for k in range(2, 7):
@@ -129,12 +129,12 @@ segment_map = {
 }
 rfm["Segment_KMeans"] = rfm["Cluster"].map(segment_map)
 #kontrol
-print(rfm[["Customer ID", "Cluster", "Segment_KMeans"]].head())
+# print(rfm[["Customer ID", "Cluster", "Segment_KMeans"]].head())
 
 segment_summary = (
     rfm.groupby("Segment_KMeans")[["Recency", "Frequency", "Monetary"]]
     .mean()
     .round(2)
 )
-print(segment_summary)
+# print(segment_summary)
 
