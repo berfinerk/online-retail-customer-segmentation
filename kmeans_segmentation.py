@@ -84,6 +84,8 @@ for k in range(2, 7):
     score = silhouette_score(X_scaled, labels)
     # print(f"K={k} için Silhouette Score: {score:.3f}")
 
+
+
 #k-means uygula(artık model kuruyoruz)
 #final k-means modeli (k=4)
 best_k =4
@@ -122,7 +124,8 @@ segment_map = {
     0: "Regular Customers", #orta seviye, ana kitle
     1: "At Risk Customers", #uzun süredir gelmeyen
     2: "Champions",         #Çok yakın, çok sık, çok harcayan
-    3:"Loyal Customers",    #yakın, sık, yüksek harcayan
+    3:"Loyal Customers",    #yakın, sık, yüksek
+
 }
 rfm["Segment_KMeans"] = rfm["Cluster"].map(segment_map)
 #kontrol

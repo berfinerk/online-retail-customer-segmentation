@@ -228,6 +228,12 @@ recency_df.rename(columns={"InvoiceDate": "Recency"}, inplace=True)
 # print(recency_df.head())
 # print(recency_df.describe())
 
+
+
+
+
+
+
 #frequrncy hesaplama
 #müşteri kaç kez alışveriş yaptı? Yani kaç farklı fatura kesmiş? bu yüzden ınvoice kolonu kullanıyoruz.
 #frequency müşteri sadakati hakkında bilgi verir.
@@ -235,6 +241,20 @@ frequency_df = df.groupby("Customer ID")["Invoice"].nunique().reset_index()
 frequency_df.rename(columns={"Invoice": "Frequency"}, inplace=True)
 # print(frequency_df.head())
 # print(frequency_df.describe())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Monetary hesaplama mantığı
 #her müşteri toplam ne kadar harcamış? Yani bu müşteri toplam kaç € harcamış.Bu metrik daha sonra en değerli müşterileri belirlemekte çok önemli
@@ -318,6 +338,7 @@ rfm['Segment'] = rfm.apply(segment_et, axis=1)
 # print("\nSegment Oranları (%):")
 # print((rfm["Segment"].value_counts(normalize=True) * 100).round(2))
 
+
 #segment bazlı harcama analizi
 #segmentlere göre toplam harcamayı hesaplayalım
 segment_monetary = rfm.groupby('Segment')['Monetary'].agg(['sum', 'mean', 'count']).reset_index()
@@ -387,7 +408,7 @@ plt.xlabel("Segment")
 plt.ylabel("Ortalama Frequency")
 plt.xticks(rotation=30)
 plt.tight_layout()
-# plt.show()
+plt.show()
 
 #segmentlere göre ortalama recency(son alışverişten geçen gün)
 plt.figure(figsize=(8,5))
@@ -401,4 +422,4 @@ plt.xlabel("Segment")
 plt.ylabel("Gün (Son alışverişten itibaren)")
 plt.xticks(rotation=30)
 plt.tight_layout()
-# plt.show()
+plt.show()
