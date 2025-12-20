@@ -49,7 +49,7 @@ The dataset contains transaction-level sales data including:
 ![Segment Customer Count](images/segment_customer_count.png)
 
 ### Product Performance Analysis (Bubble Chart)
-![Product Bubble Chart](images/product_bubble_chart.png)
+![Product Bubble Chart](images\product_buble_chart.png)
 
 ### K-Means Elbow Method
 ![Elbow Method](images/elbow_method.png)
